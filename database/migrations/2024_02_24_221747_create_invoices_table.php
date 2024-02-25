@@ -13,6 +13,20 @@ return new class extends Migration
     {
         Schema::create('invoices', function (Blueprint $table) {
             $table->id();
+            $table->string('invoice_number');
+            $table->date('invoice_date');
+            $table->date('due_date');
+            $table->string('product');
+            $table->string('section');
+            $table->string('discount');
+            $table->string('rate_vat');
+            $table->decimal('value_vat', 8, 2);
+            $table->decimal('tottal', 8, 2);
+            $table->enum('status',['Paid','unpaid','Partially paid']);
+            $table->unsignedInteger('value_status');
+            $table->text('note')->nullable();
+            $table->string('user');
+            $table->softDeletes();
             $table->timestamps();
         });
     }
