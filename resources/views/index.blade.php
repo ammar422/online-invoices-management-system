@@ -1,4 +1,5 @@
 @extends('layouts.master')
+@section('tittle', ' برنامج فواتيرى - الرئيسية')
 @section('css')
     <!--  Owl-carousel css-->
     <link href="{{ URL::asset('assets/plugins/owl-carousel/owl.carousel.css') }}" rel="stylesheet" />
@@ -10,13 +11,16 @@
     <div class="breadcrumb-header justify-content-between">
         <div class="left-content">
             <div>
-                <h2 class="main-content-title tx-24 mg-b-1 mg-b-lg-1">Hi, welcome back!</h2>
-                <p class="mg-b-0">Sales monitoring dashboard template.</p>
+                <h3 class="main-content-title tx-24 mg-b-1 mg-b-lg-1"> <strong>
+                        مرحبا بعودتكم...
+                    </strong></h3>
+                <p class="mg-b-0"><strong>قائمة عرض بيانات الفواتير</strong></p>
             </div>
         </div>
         <div class="main-dashboard-header-right">
             <div>
-                <label class="tx-13">Customer Ratings</label>
+                <label class="tx-13"><strong>
+                        تقيم العملاء</strong></label>
                 <div class="main-star">
                     <i class="typcn typcn-star active"></i> <i class="typcn typcn-star active"></i> <i
                         class="typcn typcn-star active"></i> <i class="typcn typcn-star active"></i> <i
