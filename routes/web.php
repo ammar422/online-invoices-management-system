@@ -22,6 +22,8 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-Route::resource('invoices', 'InvoiceController');
-Route::resource('sections', 'SectionController');
-Route::get('/{page}', 'AdminController@index')->middleware('auth');
+route::middleware('auth')->group(function () {
+    Route::resource('invoices', 'InvoiceController');
+    Route::resource('sections', 'SectionController');
+    Route::get('/{page}', 'AdminController@index')->middleware('auth');
+});

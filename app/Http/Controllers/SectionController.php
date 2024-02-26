@@ -30,7 +30,14 @@ class SectionController extends Controller
      */
     public function store(StoreSectionRequest $request)
     {
-        //
+        $section = Section::create($request->validated());
+        if (!$section) {
+            session()->flash('error', 'عفواََ حدث خطاء ماء برجاء المحاولة لاحقاََ');
+            return redirect('/sections');
+        }
+
+        session()->flash('success', 'تم حفظ القسم بنجاح');
+        return redirect('/sections');
     }
 
     /**

@@ -10,7 +10,7 @@ class Section extends Model
     use HasFactory;
 
 
-    protected $fillabel=[
+    protected $fillable =[
         'di',
         'name',
         'description',
