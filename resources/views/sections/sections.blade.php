@@ -1,20 +1,7 @@
 @extends('layouts.master')
 @section('tittle', 'الاقسام')
 @section('css')
-    <!-- Internal Data table css -->
-    <link href="{{ URL::asset('assets/plugins/datatable/css/dataTables.bootstrap4.min.css') }}" rel="stylesheet" />
-    <link href="{{ URL::asset('assets/plugins/datatable/css/buttons.bootstrap4.min.css') }}" rel="stylesheet">
-    <link href="{{ URL::asset('assets/plugins/datatable/css/responsive.bootstrap4.min.css') }}" rel="stylesheet" />
-    <link href="{{ URL::asset('assets/plugins/datatable/css/jquery.dataTables.min.css') }}" rel="stylesheet">
-    <link href="{{ URL::asset('assets/plugins/datatable/css/responsive.dataTables.min.css') }}" rel="stylesheet">
-    <link href="{{ URL::asset('assets/plugins/select2/css/select2.min.css') }}" rel="stylesheet">
-
-    <!---Internal Owl Carousel css-->
-    <link href="{{ URL::asset('assets/plugins/owl-carousel/owl.carousel.css') }}" rel="stylesheet">
-    <!---Internal  Multislider css-->
-    <link href="{{ URL::asset('assets/plugins/multislider/multislider.css') }}" rel="stylesheet">
-    <!--- Select2 css -->
-    <link href="{{ URL::asset('assets/plugins/select2/css/select2.min.css') }}" rel="stylesheet">
+    @include('includes.css.css')
 @endsection
 @section('page-header')
     <!-- breadcrumb -->
@@ -32,9 +19,7 @@
 @section('content')
     <!-- row -->
     <div class="row">
-        @include('includes.alerts.success')
-        @include('includes.alerts.error')
-        <div class="row row-sm">
+        <div id='secTable' class="row row-sm">
             <!--div-->
             <div class="col-xl-12">
                 <div class="card mg-b-20">
@@ -55,8 +40,8 @@
                             </p>
                         @endisset
                         <div class="col-sm-6 col-md-4 col-xl-3">
-                            <a class="modal-effect btn btn-success btn-block" data-effect="effect-scale" data-toggle="modal"
-                                href="#modaldemo8">
+                            <a class="modal-effect btn btn-outline-success btn-block" data-effect="effect-scale"
+                                data-toggle="modal" href="#modaldemo8">
                                 <strong>
                                     إضافة قسم
                                 </strong>
@@ -95,13 +80,13 @@
                                         </thead>
                                         <tbody>
                                             @foreach ($sections as $section)
-                                                <tr>
+                                                <tr class="section-row{{ $section->id }}">
                                                     <td>{{ $section->id }}</td>
                                                     <td>{{ $section->name }}</td>
                                                     <td>{{ $section->description }}</td>
                                                     <td>
-                                                        <a class="btn btn-success" href="">edit</a>
-                                                        <a class="btn btn-danger" href="">delete</a>
+                                                        <a class="btn btn-outline-success" href="">تعديل</a>
+                                                        <a class="btn btn-outline-danger" href="">مسح</a>
                                                     </td>
                                                     <td></td>
                                                 </tr>
@@ -129,7 +114,25 @@
                         <h6 class="modal-title"> إضافة قسم جديد</h6><button aria-label="Close" class="close"
                             data-dismiss="modal" type="button"><span aria-hidden="true">&times;</span></button>
                     </div>
-                    <form action="{{ route('sections.store') }}" method="post">
+                    <div style="display: none" id="aler-seccess" class="alert alert-success alert-dismissible fade show"
+                        role="alert">
+                        <strong>
+                            تم حفظ القسم بنجاح
+                        </strong>
+                        <button type="button" class="close" data-dismiss='alert' aria-label="Close">
+                            <span aria-hidden="true">&times; </span>
+                        </button>
+                    </div>
+                    <div style="display: none" id="aler-error" class="alert alert-danger alert-dismissible fade show"
+                        role="alert">
+                        <strong>
+                            عفواََ حدث خطاء ماء برجاء المحاولة لاحقاََ
+                        </strong>
+                        <button type="button" class="close" data-dismiss='alert' aria-label="Close">
+                            <span aria-hidden="true">&times; </span>
+                        </button>
+                    </div>
+                    <form id="section-form">
                         @csrf
 
                         <div class="modal-body">
@@ -149,7 +152,8 @@
                                 @enderror
                             </div>
                             <div class="form-group">
-                                <label for="examplFormControlTextarea1"><strong>
+                                <label for="examplFormControlTextarea1">
+                                    <strong>
                                         الوصف
                                     </strong>
                                 </label>
@@ -166,7 +170,7 @@
                             <input type="hidden" value="{{ Auth::user()->name }}" name="created_by">
                         </div>
                         <div class="modal-footer">
-                            <button class="btn btn-success" type="submit"><strong>حفظ</strong> </button>
+                            <button class="btn btn-success" id="form-submit" type="submit"><strong>حفظ</strong> </button>
                             <button class="btn btn-secondary" data-dismiss="modal"
                                 type="button"><strong>إلغاء</strong></button>
                         </div>
@@ -184,30 +188,30 @@
     <!-- main-content closed -->
 @endsection
 @section('js')
-    <!-- Internal Data tables -->
-    <script src="{{ URL::asset('assets/plugins/datatable/js/jquery.dataTables.min.js') }}"></script>
-    <script src="{{ URL::asset('assets/plugins/datatable/js/dataTables.dataTables.min.js') }}"></script>
-    <script src="{{ URL::asset('assets/plugins/datatable/js/dataTables.responsive.min.js') }}"></script>
-    <script src="{{ URL::asset('assets/plugins/datatable/js/responsive.dataTables.min.js') }}"></script>
-    <script src="{{ URL::asset('assets/plugins/datatable/js/jquery.dataTables.js') }}"></script>
-    <script src="{{ URL::asset('assets/plugins/datatable/js/dataTables.bootstrap4.js') }}"></script>
-    <script src="{{ URL::asset('assets/plugins/datatable/js/dataTables.buttons.min.js') }}"></script>
-    <script src="{{ URL::asset('assets/plugins/datatable/js/buttons.bootstrap4.min.js') }}"></script>
-    <script src="{{ URL::asset('assets/plugins/datatable/js/jszip.min.js') }}"></script>
-    <script src="{{ URL::asset('assets/plugins/datatable/js/pdfmake.min.js') }}"></script>
-    <script src="{{ URL::asset('assets/plugins/datatable/js/vfs_fonts.js') }}"></script>
-    <script src="{{ URL::asset('assets/plugins/datatable/js/buttons.html5.min.js') }}"></script>
-    <script src="{{ URL::asset('assets/plugins/datatable/js/buttons.print.min.js') }}"></script>
-    <script src="{{ URL::asset('assets/plugins/datatable/js/buttons.colVis.min.js') }}"></script>
-    <script src="{{ URL::asset('assets/plugins/datatable/js/dataTables.responsive.min.js') }}"></script>
-    <script src="{{ URL::asset('assets/plugins/datatable/js/responsive.bootstrap4.min.js') }}"></script>
-    <!--Internal  Datatable js -->
-    <script src="{{ URL::asset('assets/js/table-data.js') }}"></script>
+    @include('includes.js.js')
 
-    <!--Internal  Datepicker js -->
-    <script src="{{ URL::asset('assets/plugins/jquery-ui/ui/widgets/datepicker.js') }}"></script>
-    <!-- Internal Select2 js-->
-    <script src="{{ URL::asset('assets/plugins/select2/js/select2.min.js') }}"></script>
-    <!-- Internal Modal js-->
-    <script src="{{ URL::asset('assets/js/modal.js') }}"></script>
+    <script>
+        $(document).on('click', '#form-submit', function(e) {
+            e.preventDefault()
+            let formdata = new FormData($('#section-form')[0])
+            $.ajax({
+                type: 'post',
+                url: '{{ route('sections.store') }}',
+                data: formdata,
+                processData: false,
+                contentType: false,
+                cache: false,
+                success: function(data) {
+                    if (data.status == true) {
+                        $("#aler-seccess").show()
+                    }
+                    if (data.status == false) {
+                        $("#aler-error").show()
+
+                    }
+                },
+                error: function(reject) {},
+            });
+        })
+    </script>
 @endsection

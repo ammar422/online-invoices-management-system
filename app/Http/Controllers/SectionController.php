@@ -32,12 +32,18 @@ class SectionController extends Controller
     {
         $section = Section::create($request->validated());
         if (!$section) {
-            session()->flash('error', 'عفواََ حدث خطاء ماء برجاء المحاولة لاحقاََ');
-            return redirect('/sections');
+            return response([
+                'status' => false,
+                'Error Number' => 201,
+                'Message' => 'عفواََ حدث خطاء ماء برجاء المحاولة لاحقاََ',
+            ]);
         }
 
-        session()->flash('success', 'تم حفظ القسم بنجاح');
-        return redirect('/sections');
+        return response([
+            'status' => true,
+            'Error Number' => 200,
+            'Message' => 'تم حفظ القسم بنجاح',
+        ]);
     }
 
     /**
