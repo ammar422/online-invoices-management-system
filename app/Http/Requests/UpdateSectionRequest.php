@@ -11,7 +11,7 @@ class UpdateSectionRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,9 @@ class UpdateSectionRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'name'=>'required|max:100|unique:sections,name,' . $this->id,
+            'description'=>'max:255',
+            'created_by'=>'exists:users,name',
         ];
     }
 }

@@ -19,52 +19,21 @@
 @section('content')
     <!-- row -->
     <div class="row">
-        <div id='secTable' class="row row-sm">
+        <div class="row row-sm">
             <!--div-->
             <div class="col-xl-12">
-                <div class="card mg-b-20">
-                    <div class="card-header pb-0">
-                        <div class="d-flex justify-content-between">
-                            <h4 class="card-title mg-b-0">
-                                <strong>
-                                    جدول قائمة الاقسام
-                                </strong>
-                            </h4>
-                            <i class="mdi mdi-dots-horizontal text-gray"></i>
-                        </div>
-                        @isset($sections)
-                            <p class="tx-12 tx-gray-500 mb-2">
-                                <strong>
-                                    هذا الجدول يحتوى على كافة الاقسام بجميع تفاصيلها
-                                </strong>
-                            </p>
-                        @endisset
-                        <div class="col-sm-6 col-md-4 col-xl-3">
-                            <a class="modal-effect btn btn-outline-success btn-block" data-effect="effect-scale"
-                                data-toggle="modal" href="#modaldemo8">
-                                <strong>
-                                    إضافة قسم
-                                </strong>
-                            </a>
-                        </div>
+                @include('includes.alerts.success')
+                @include('includes.alerts.error')
+                <div class="card-header pb-0">
+                    <div class="card mg-b-20">
+                        <a class="modal-effect btn btn-outline-success btn-block" data-effect="effect-scale"
+                            data-toggle="modal" href="#modaldemo1">
+                            <strong>
+                                إضافة قسم
+                            </strong>
+                        </a>
                     </div>
                     @isset($sections)
-                        @if ($sections->count() < 1)
-                            <div class="card-header pb-0">
-                                <div class="d-flex justify-content-between">
-
-
-                                </div>
-                                <p class="tx-12 tx-gray-500 mb-2">
-                                <h3>
-                                    <strong>
-                                        لا يوجد اي اقسام لعرضها
-                                    </strong>
-                                </h3>
-                                </p>
-                            </div>
-                        @endif
-
                         @if ($sections->count() > 0)
                             <div class="card-body">
                                 <div class="table-responsive">
@@ -80,13 +49,21 @@
                                         </thead>
                                         <tbody>
                                             @foreach ($sections as $section)
-                                                <tr class="section-row{{ $section->id }}">
+                                                <tr>
                                                     <td>{{ $section->id }}</td>
                                                     <td>{{ $section->name }}</td>
                                                     <td>{{ $section->description }}</td>
                                                     <td>
-                                                        <a class="btn btn-outline-success" href="">تعديل</a>
-                                                        <a class="btn btn-outline-danger" href="">مسح</a>
+                                                        <a class="modal-effect btn btn-outline-info" data-effect="effect-scale"
+                                                            data-toggle="modal" data-id='{{ $section->id }}'
+                                                            data-name='{{ $section->name }}'
+                                                            data-description='{{ $section->description }}' href="#editmodal"
+                                                            title="تعديل">
+                                                            <i class="las la-pen"></i>
+                                                        </a>
+                                                        <a class="modal-effect btn btn-outline-danger" href="#deletemodal"
+                                                            data-effect="effect-scale" data-id='{{ $section->id }}'
+                                                            data-toggle="modal" title="مسح"> <i class="las la-trash"></i></a>
                                                     </td>
                                                     <td></td>
                                                 </tr>
@@ -101,40 +78,20 @@
                 </div>
             </div>
             <!--/div-->
-
             <!--div-->
-
-
         </div>
         <!-- Basic modal -->
-        <div class="modal" id="modaldemo8">
+        <div class="modal" id="modaldemo1">
             <div class="modal-dialog" role="document">
                 <div class="modal-content modal-content-demo">
                     <div class="modal-header">
-                        <h6 class="modal-title"> إضافة قسم جديد</h6><button aria-label="Close" class="close"
-                            data-dismiss="modal" type="button"><span aria-hidden="true">&times;</span></button>
+                        <h6 class="modal-title"><strong>
+                                اضافة قسم
+                            </strong></h6><button aria-label="Close" class="close" data-dismiss="modal"
+                            type="button"><span aria-hidden="true">&times;</span></button>
                     </div>
-                    <div style="display: none" id="aler-seccess" class="alert alert-success alert-dismissible fade show"
-                        role="alert">
-                        <strong>
-                            تم حفظ القسم بنجاح
-                        </strong>
-                        <button type="button" class="close" data-dismiss='alert' aria-label="Close">
-                            <span aria-hidden="true">&times; </span>
-                        </button>
-                    </div>
-                    <div style="display: none" id="aler-error" class="alert alert-danger alert-dismissible fade show"
-                        role="alert">
-                        <strong>
-                            عفواََ حدث خطاء ماء برجاء المحاولة لاحقاََ
-                        </strong>
-                        <button type="button" class="close" data-dismiss='alert' aria-label="Close">
-                            <span aria-hidden="true">&times; </span>
-                        </button>
-                    </div>
-                    <form id="section-form">
+                    <form action="{{ route('sections.store') }}" method="post">
                         @csrf
-
                         <div class="modal-body">
                             <div class="form-group">
                                 <label for="exampleInputEmail1"><strong>
@@ -170,15 +127,96 @@
                             <input type="hidden" value="{{ Auth::user()->name }}" name="created_by">
                         </div>
                         <div class="modal-footer">
-                            <button class="btn btn-success" id="form-submit" type="submit"><strong>حفظ</strong> </button>
-                            <button class="btn btn-secondary" data-dismiss="modal"
-                                type="button"><strong>إلغاء</strong></button>
+                            <button class="btn ripple btn-primary" type="submit"><strong>
+                                    حفظ
+                                </strong></button>
+                            <button class="btn ripple btn-secondary" data-dismiss="modal" type="button"><strong>
+                                    إلغاء
+                                </strong></button>
                         </div>
                     </form>
                 </div>
             </div>
         </div>
         <!-- End Basic modal -->
+
+        <!-- edit modal -->
+        <div class="modal fade" id="editmodal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">تعديل القسم</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+
+                        <form action="" method="post" autocomplete="off" id="edit-form">
+                            {{ method_field('patch') }}
+                            {{ csrf_field() }}
+                            <div class="form-group">
+                                <input type="hidden" name="id" id="id" value="">
+                                <input type="hidden" value="{{ Auth::user()->name }}" name="created_by">
+                                <label for="recipient-name" class="col-form-label"><strong>اسم القسم</strong></label>
+                                <input class="form-control @error('name') is-invalid @enderror" name="name"
+                                    id="name" type="text">
+                                @error('name')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>
+                                            {{ $message }}
+                                        </strong>
+                                    </span>
+                                @enderror
+
+                            </div>
+                            <div class="form-group">
+                                <label for="message-text" class="col-form-label"><strong>ملاحظات</strong></label>
+                                <textarea class="form-control @error('description') is-invalid @enderror" id="description" name="description"></textarea>
+                                @error('description')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>
+                                            {{ $message }}
+                                        </strong>
+                                    </span>
+                                @enderror
+                            </div>
+                            <div class="modal-footer">
+                                <button type="submit" class="btn btn-primary"><strong>تاكيد</strong></button>
+                                <button type="button" class="btn btn-secondary"
+                                    data-dismiss="modal"><strong>اغلاق</strong></button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- delete modal -->
+        <div class="modal" id="deletemodal">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content modal-content-demo">
+                    <div class="modal-header">
+                        <h6 class="modal-title"><strong>حذف القسم</strong></h6><button aria-label="Close" class="close"
+                            data-dismiss="modal" type="button"><span aria-hidden="true">&times;</span></button>
+                    </div>
+                    <form id="delete-form" action="" method="post">
+                        @csrf
+                        @method('delete')
+                        <input type="hidden" name="id" id="id" value="">
+                        <div class="modal-body">
+                            <p><strong>هل انت متاكد من عملية الحذف ؟</strong></p><br>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">الغاء</button>
+                            <button type="submit" class="btn btn-danger"><strong>تاكيد</strong></button>
+                        </div>
+                </div>
+                </form>
+            </div>
+        </div>
+
 
     </div>
     <!-- row closed -->
@@ -188,30 +226,31 @@
     <!-- main-content closed -->
 @endsection
 @section('js')
+    {{-- include for css modale --}}
     @include('includes.js.js')
 
+    {{-- Jquary script --}}
     <script>
-        $(document).on('click', '#form-submit', function(e) {
-            e.preventDefault()
-            let formdata = new FormData($('#section-form')[0])
-            $.ajax({
-                type: 'post',
-                url: '{{ route('sections.store') }}',
-                data: formdata,
-                processData: false,
-                contentType: false,
-                cache: false,
-                success: function(data) {
-                    if (data.status == true) {
-                        $("#aler-seccess").show()
-                    }
-                    if (data.status == false) {
-                        $("#aler-error").show()
+        $('#editmodal').on('show.bs.modal', function(event) {
+            var button = $(event.relatedTarget)
+            var id = button.data('id')
+            var name = button.data('name')
+            var description = button.data('description')
+            var modal = $(this)
+            modal.find('.modal-body #id').val(id);
+            modal.find('.modal-body #name').val(name);
+            modal.find('.modal-body #description').val(description);
+            document.getElementById('edit-form').action = '{{ url('sections') }}' + '/' + id;
+        })
 
-                    }
-                },
-                error: function(reject) {},
-            });
+
+        $('#deletemodal').on('show.bs.modal', function(event) {
+            var button = $(event.relatedTarget)
+            var id = button.data('id')
+            var modal = $(this)
+            modal.find('.modal-body #id').val(id);
+            document.getElementById('delete-form').action = '{{ url('sections') }}' + '/' + id;
         })
     </script>
+
 @endsection

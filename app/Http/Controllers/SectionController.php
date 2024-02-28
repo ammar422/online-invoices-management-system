@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\SectionCreated;
 use App\Models\Section;
 use App\Http\Requests\StoreSectionRequest;
 use App\Http\Requests\UpdateSectionRequest;
+use Illuminate\Auth\Events\Validated;
 
 class SectionController extends Controller
 {
@@ -30,20 +32,13 @@ class SectionController extends Controller
      */
     public function store(StoreSectionRequest $request)
     {
-        $section = Section::create($request->validated());
+        $section = Section::create($request->validated());;
         if (!$section) {
-            return response([
-                'status' => false,
-                'Error Number' => 201,
-                'Message' => 'عفواََ حدث خطاء ماء برجاء المحاولة لاحقاََ',
-            ]);
+            session()->flash('error', 'عفوا حدث خطاء ماء رجاء المحاولة مرة اخرى');
+            return to_route('sections.index');
         }
-
-        return response([
-            'status' => true,
-            'Error Number' => 200,
-            'Message' => 'تم حفظ القسم بنجاح',
-        ]);
+        session()->flash('success', 'لقد تم حفظ القسم(' . $request->name . ') بنجاح');
+        return to_route('sections.index');
     }
 
     /**
@@ -67,7 +62,14 @@ class SectionController extends Controller
      */
     public function update(UpdateSectionRequest $request, Section $section)
     {
-        //
+
+        $updated = $section->update($request->validated());
+        if (!$updated) {
+            session()->flash('error', 'عفوا حدث خطاء ماء رجاء المحاولة مرة اخرى');
+            return to_route('sections.index');
+        }
+        session()->flash('success', 'تم تعديل القسم بنجاح');
+        return to_route('sections.index');
     }
 
     /**
@@ -75,6 +77,12 @@ class SectionController extends Controller
      */
     public function destroy(Section $section)
     {
-        //
+        $deleted = $section->delete();
+        if (!$deleted) {
+            session()->flash('error', 'عفوا حدث خطاء ماء رجاء المحاولة مرة اخرى');
+            return to_route('sections.index');
+        }
+        session()->flash('success', 'تم حذف القسم بنجاح');
+        return to_route('sections.index');
     }
 }
