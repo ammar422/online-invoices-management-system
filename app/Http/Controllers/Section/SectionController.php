@@ -1,12 +1,11 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Section;
 
-use App\Events\SectionCreated;
 use App\Models\Section;
-use App\Http\Requests\StoreSectionRequest;
-use App\Http\Requests\UpdateSectionRequest;
-use Illuminate\Auth\Events\Validated;
+use App\Http\Controllers\Controller;
+use App\Http\Requests\Section\StoreSectionRequest;
+use App\Http\Requests\Section\UpdateSectionRequest;
 
 class SectionController extends Controller
 {

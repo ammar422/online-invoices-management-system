@@ -1,17 +1,17 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Section;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateInvoiceRequest extends FormRequest
+class UpdateSectionRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,9 @@ class UpdateInvoiceRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'name'=>'required|max:100|unique:sections,name,' . $this->id,
+            'description'=>'max:255',
+            'created_by'=>'exists:users,name',
         ];
     }
 }

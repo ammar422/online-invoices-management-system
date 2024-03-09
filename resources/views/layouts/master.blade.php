@@ -30,7 +30,7 @@
             @include('layouts.models')
             @include('layouts.footer')
             @include('layouts.footer-scripts')
-            @vite(['resources/sass/app.scss', 'resources/js/app.js'])
+            {{-- @vite(['resources/sass/app.scss', 'resources/js/app.js']) --}}
 </body>
 
 </html>

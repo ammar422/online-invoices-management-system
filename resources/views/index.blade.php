@@ -1,5 +1,5 @@
 @extends('layouts.master')
-@section('tittle', ' برنامج فواتيرى - الرئيسية')
+@section('title', ' برنامج فواتيرى - الرئيسية')
 @section('css')
     <!--  Owl-carousel css-->
     <link href="{{ URL::asset('assets/plugins/owl-carousel/owl.carousel.css') }}" rel="stylesheet" />

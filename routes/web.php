@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\InvoiceController;
+use App\Models\Section;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -19,11 +19,17 @@ Route::get('/', function () {
     return view('auth.login');
 })->middleware('guest');
 
+// route::get('tst',function(){
+//     return getSectionName();
+//     });
+
+
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 route::middleware('auth')->group(function () {
-    Route::resource('invoices', 'InvoiceController');
-    Route::resource('sections', 'SectionController');
+    Route::resource('invoices', 'Invoice\InvoiceController');
+    Route::resource('sections', 'Section\SectionController');
+    route::resource('products','Product\ProductController');
     Route::get('/{page}', 'AdminController@index')->middleware('auth');
 });

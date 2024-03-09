@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Section;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateSectionRequest extends FormRequest
+class StoreSectionRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,9 +22,10 @@ class UpdateSectionRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name'=>'required|max:100|unique:sections,name,' . $this->id,
+            'name'=>'required|max:100|unique:sections,name',
             'description'=>'max:255',
             'created_by'=>'exists:users,name',
+            
         ];
     }
 }

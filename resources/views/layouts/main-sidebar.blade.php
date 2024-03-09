@@ -151,7 +151,7 @@
                         class="angle fe fe-chevron-down"></i></a>
                 <ul class="slide-menu">
                     <li><a class="slide-item" href="{{ url('/' . ($page = 'sections')) }}"> <strong>الاقسام</strong></a></li>
-                    <li><a class="slide-item" href="{{ url('/' . ($page = 'profile')) }}"><strong>المنتجات</strong>
+                    <li><a class="slide-item" href="{{ url('/' . ($page = 'products')) }}"><strong>المنتجات</strong>
                         </a></li>
 
                 </ul>

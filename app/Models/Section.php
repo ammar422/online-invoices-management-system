@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Notifications\Notification;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Section extends Model
 {
@@ -20,11 +21,20 @@ class Section extends Model
     ];
 
 
-
+    public function scopeSection($quary){
+        return $quary->select('id','name')->get();
+    }
 
     public function routeNotificationForMail(Notification $notification): array|string
     {
         // Return email address only...
         return $this->email_address;
+    }
+
+    public function scopeSectionName($quary){
+        return $quary->select('id','name')->get();
+    }
+    public function proudect():HasMany{
+        return $this->hasMany(Product::class ,'section_id','id');
     }
 }

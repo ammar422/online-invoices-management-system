@@ -1,5 +1,5 @@
 @extends('layouts.master')
-@section('tittle', 'الاقسام')
+@section('title', 'الاقسام')
 @section('css')
     @include('includes.css.css')
 @endsection
@@ -12,7 +12,6 @@
                     class="text-muted mt-1 tx-13 mr-2 mb-0"><strong> / الاقسام</strong></span>
             </div>
         </div>
-
     </div>
     <!-- breadcrumb -->
 @endsection
@@ -20,12 +19,11 @@
     <!-- row -->
     <div class="row">
         <div class="row row-sm">
-            <!--div-->
             <div class="col-xl-12">
                 @include('includes.alerts.success')
                 @include('includes.alerts.error')
-                <div class="card-header pb-0">
-                    <div class="card mg-b-20">
+                <div class="card mg-b-20">
+                    <div class="card-header pb-0">
                         <a class="modal-effect btn btn-outline-success btn-block" data-effect="effect-scale"
                             data-toggle="modal" href="#modaldemo1">
                             <strong>
@@ -62,8 +60,9 @@
                                                             <i class="las la-pen"></i>
                                                         </a>
                                                         <a class="modal-effect btn btn-outline-danger" href="#deletemodal"
-                                                            data-effect="effect-scale" data-id='{{ $section->id }}'
-                                                            data-toggle="modal" title="مسح"> <i class="las la-trash"></i></a>
+                                                            data-effect="effect-scale" data-name='{{ $section->name }}'
+                                                            data-id='{{ $section->id }}' data-toggle="modal" title="مسح"> <i
+                                                                class="las la-trash"></i></a>
                                                     </td>
                                                     <td></td>
                                                 </tr>
@@ -172,7 +171,7 @@
 
                             </div>
                             <div class="form-group">
-                                <label for="message-text" class="col-form-label"><strong>ملاحظات</strong></label>
+                                <label for="message-text" class="col-form-label"><strong>الوصف</strong></label>
                                 <textarea class="form-control @error('description') is-invalid @enderror" id="description" name="description"></textarea>
                                 @error('description')
                                     <span class="invalid-feedback" role="alert">
@@ -204,9 +203,11 @@
                     <form id="delete-form" action="" method="post">
                         @csrf
                         @method('delete')
-                        <input type="hidden" name="id" id="id" value="">
                         <div class="modal-body">
                             <p><strong>هل انت متاكد من عملية الحذف ؟</strong></p><br>
+                            <input type="hidden" name="id" id="id" value="">
+                            <input class="form-control" name="name" id="name" type="text" readonly
+                                value="">
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">الغاء</button>
@@ -247,8 +248,10 @@
         $('#deletemodal').on('show.bs.modal', function(event) {
             var button = $(event.relatedTarget)
             var id = button.data('id')
+            var name = button.data('name')
             var modal = $(this)
             modal.find('.modal-body #id').val(id);
+            modal.find('.modal-body #name').val(name);
             document.getElementById('delete-form').action = '{{ url('sections') }}' + '/' + id;
         })
     </script>

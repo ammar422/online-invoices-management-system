@@ -1,10 +1,11 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Invoice;
 
 use App\Models\Invoice;
-use App\Http\Requests\StoreInvoiceRequest;
-use App\Http\Requests\UpdateInvoiceRequest;
+use App\Http\Controllers\Controller;
+use App\Http\Requests\invoice\StoreInvoiceRequest;
+use App\Http\Requests\invoice\UpdateInvoiceRequest;
 
 class InvoiceController extends Controller
 {

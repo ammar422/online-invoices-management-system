@@ -1,6 +1,5 @@
 @extends('layouts.master2')
-
-@section('tittle','تسجيل الدخول برنامج فواتيرى')
+@section('title','تسجيل الدخول برنامج فواتيرى')
 
 
 @section('css')
@@ -80,6 +79,9 @@
                                                     {{ __('تسجيل الدخول') }}
                                                 </button>
                                             </form>
+                                            <a href="{{ route('register') }}" type="submit" class="btn btn-main-primary btn-block">
+                                                {{ __('إنشاء حساب جديد') }}
+                                            </a>
                                         </div>
                                     </div>
                                 </div>
