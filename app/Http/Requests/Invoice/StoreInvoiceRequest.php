@@ -11,7 +11,7 @@ class StoreInvoiceRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,19 @@ class StoreInvoiceRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'invoice_number' => 'required|numeric',
+            'invoice_date' => 'required|date',
+            'due_date' => 'required','date',
+            'section' => 'required','exists:sections,name',
+            'product' => 'required','exists:products,product_name',
+            'collection-amount' => 'required','numeric',
+            'commission-amount' => 'required','numeric',
+            'discount' => 'required','numeric',
+            'rate_vat' => 'required',
+            'value_vat' => 'required',
+            'tottal' => 'required',
+            'note' => 'nullable','max:255',
+            'pic' => 'required','image','mimes:png,jpg','size:1024'
         ];
     }
 }

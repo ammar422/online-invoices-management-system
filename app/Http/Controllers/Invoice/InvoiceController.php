@@ -13,15 +13,14 @@ class InvoiceController extends Controller
      * Display a listing of the resource.
      */
 
-     public function __construct()
-     {
+    public function __construct()
+    {
         $this->middleware('auth');
-     }
+    }
     public function index()
     {
-         $invoices=Invoice::all();
+        $invoices = Invoice::all();
         return view('invoices.invoices', compact('invoices'));
-        
     }
 
     /**
@@ -29,7 +28,7 @@ class InvoiceController extends Controller
      */
     public function create()
     {
-        //
+        return view('invoices.add-invoice');
     }
 
     /**
@@ -37,7 +36,7 @@ class InvoiceController extends Controller
      */
     public function store(StoreInvoiceRequest $request)
     {
-        //
+        return ($request);
     }
 
     /**

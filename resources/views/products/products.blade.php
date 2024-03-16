@@ -65,6 +65,7 @@
                                                     data-toggle="modal" href="#edit-product-modal" title="تعديل"
                                                     data-id='{{ $product->id }}' data-name="{{ $product->product_name }}"
                                                     data-sectionId="{{ $product->section->id }}"
+                                                    data-sectionName="{{ $product->section->name }}"
                                                     data-description="{{ $product->description }}">
                                                     <i class="las la-pen"></i>
                                                 </a>
@@ -175,13 +176,12 @@
                                 </strong>
                             </span>
                         @enderror
-                    </div>
-                    <div class="modal-body">
+
+
                         <h6> القسم</h6>
-                        <select class="form-control @error('section_id')is-inavlid @enderror" name="section_id"
-                            id="">
+                        <select class="form-control @error('section_id')is-inavlid @enderror" name="section_id">
                             @foreach (getSectionName() as $section)
-                                <option id="section_id" value="{{ $section->id }}"> {{ $section->name }}</option>
+                                <option value="{{ $section->id }}"> {{ $section->name }}</option>
                             @endforeach
                         </select>
                         @error('section_id')
@@ -189,8 +189,6 @@
                                 {{ $message }}
                             </span>
                         @enderror
-                    </div>
-                    <div class="modal-body">
                         <h6> الوصف </h6>
                         <textarea class="form-control @error('description') is-invalid @enderror" name="description" id="description"
                             rows="3">

@@ -18,6 +18,11 @@ class Product extends Model
 
 
 
+public function scopeProducts($query){
+    return $query->select('id','product_name')->get();
+}
+
+
     public function section(): BelongsTo
     {
         return $this->belongsTo(Section::class, 'section_id', 'id');

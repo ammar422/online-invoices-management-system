@@ -34,6 +34,9 @@ class Section extends Model
     public function scopeSectionName($quary){
         return $quary->select('id','name')->get();
     }
+
+
+    
     public function proudect():HasMany{
         return $this->hasMany(Product::class ,'section_id','id');
     }

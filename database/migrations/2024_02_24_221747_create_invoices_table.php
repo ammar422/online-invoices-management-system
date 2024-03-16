@@ -16,8 +16,8 @@ return new class extends Migration
             $table->string('invoice_number');
             $table->date('invoice_date');
             $table->date('due_date');
-            $table->string('product');
-            $table->string('section');
+            $table->unsignedBigInteger('product_id');
+            $table->unsignedBigInteger('section_id');
             $table->string('discount');
             $table->string('rate_vat');
             $table->decimal('value_vat', 8, 2);

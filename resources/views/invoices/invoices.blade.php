@@ -42,6 +42,7 @@
                                 هذا الجدول يحتوى على كافة الفواتير بجميع انواعها والاقسام والمنتجات التى تنتمى اليها
                             </p>
                         @endisset
+                        <a href="{{ route('invoices.create') }}" class="btn btn-success"> إضافة فاتورة</a>
                     </div>
                     @if (!isset($invoices))
                         <div class="card-header pb-0">

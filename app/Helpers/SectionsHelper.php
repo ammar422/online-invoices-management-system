@@ -2,6 +2,7 @@
 
 use App\Models\Section;
 
-function getSectionName(){
+function getSectionName()
+{
     return Section::section();
 }
