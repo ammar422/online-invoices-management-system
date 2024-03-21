@@ -37,7 +37,7 @@ class Section extends Model
 
 
     
-    public function proudect():HasMany{
+    public function product():HasMany{
         return $this->hasMany(Product::class ,'section_id','id');
     }
 }

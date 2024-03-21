@@ -32,7 +32,7 @@ class StoreInvoiceRequest extends FormRequest
             'discount' => 'required','numeric',
             'rate_vat' => 'required',
             'value_vat' => 'required',
-            'tottal' => 'required',
+            'total' => 'required',
             'note' => 'nullable','max:255',
             'pic' => 'required','image','mimes:png,jpg','size:1024'
         ];

@@ -45,7 +45,8 @@ class SectionController extends Controller
      */
     public function show(Section $section)
     {
-        //
+        return $products = $section->product->pluck('product_name','id');
+        return json_encode($products);
     }
 
     /**

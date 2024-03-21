@@ -85,10 +85,7 @@
                                 <label for="inputName" class="control-label">المنتج</label>
                                 <select id="product" name="product"
                                     class="form-control @error('product') is-invalid @enderror ">
-                                    <option value="" selected disabled>حدد المنتج</option>
-                                    @foreach (getProductsName() as $product)
-                                        <option value="{{ $product->id }}">{{ $product->product_name }}</option>
-                                    @endforeach
+
                                 </select>
                                 @error('product')
                                     <span class="invalid-feedback" role="alert">
@@ -130,7 +127,7 @@
                                 <label for="inputName" class="control-label">الخصم</label>
                                 <input type="text"
                                     class="form-control form-control-lg @error('discount') is-invalid @enderror"
-                                    id="Discount" name="discount" title="يرجي ادخال مبلغ الخصم ">
+                                    id="Discount" name="discount" value="0" title="يرجي ادخال مبلغ الخصم ">
                                 @error('discount')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>
@@ -142,10 +139,11 @@
                             <div class="col">
                                 <label for="inputName" class="control-label">نسبة ضريبة القيمة المضافة</label>
                                 <select name="rate_vat" id="rate_vat"
-                                    class="form-control @error('rate_vat') is-invalid @enderror">
+                                    class="form-control @error('rate_vat') is-invalid @enderror" onchange="calcTotla()">
                                     <option value="" selected disabled>حدد نسبة الضريبة</option>
-                                    <option value=" 5%">5%</option>
-                                    <option value="10%">10%</option>
+                                    <option value="5">5%</option>
+                                    <option value="10">10%</option>
+                                    <option value="15">15%</option>
                                 </select>
                                 @error('rate_vat')
                                     <span class="invalid-feedback" role="alert">
@@ -160,8 +158,9 @@
                         <div class="row">
                             <div class="col">
                                 <label for="inputName" class="control-label">قيمة ضريبة القيمة المضافة</label>
-                                <input type="text" class="form-control  @error('value_vat') is-invalid @enderror"
-                                    id="value_vat" name="value_vat">
+                                <input readonly type="text"
+                                    class="form-control  @error('value_vat') is-invalid @enderror" id="value_vat"
+                                    name="value_vat">
                                 @error('value_vat')
                                     <span class="invalid-feedback "role="alert">
                                         <strong>
@@ -173,9 +172,9 @@
 
                             <div class="col">
                                 <label for="inputName" class="control-label ">الاجمالي شامل الضريبة</label>
-                                <input type="text" class="form-control @error('tottal') is-invalid @enderror"
-                                    id="tottal" name="tottal">
-                                @error('tottal')
+                                <input readonly type="text" class="form-control @error('total') is-invalid @enderror"
+                                    id="total" name="total">
+                                @error('total')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>
                                             {{ $message }}
@@ -203,15 +202,15 @@
 
                         <h5 class="card-title">المرفقات</h5>
                         <div class="col">
-                            <input type="file" name="pic" class="form-control  @error('pic') is-invalid @enderror"
-                                data-height="70" />
-								@error('pic')
-								<span class="invalid-feedback" role="alert">
-									<strong>
-										{{ $message }}
-									</strong>
-								</span>
-							@enderror
+                            <input type="file" name="pic"
+                                class="form-control  @error('pic') is-invalid @enderror" data-height="70" />
+                            @error('pic')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>
+                                        {{ $message }}
+                                    </strong>
+                                </span>
+                            @enderror
                         </div><br>
 
                         <div class="d-flex justify-content-center">
@@ -230,4 +229,27 @@
 @endsection
 @section('js')
     @include('includes.js.js')
+
+
+    {{-- script of calculating the total of invoice --}}
+    <script>
+        function calcTotla() {
+            let commissionAmount = parseFloat(document.getElementById('commission-amount').value);
+            let Discount = parseFloat(document.getElementById('Discount').value);
+            let rate_vat = parseFloat(document.getElementById('rate_vat').value);
+            let value_vat = parseFloat(document.getElementById('value_vat').value);
+
+            let finalCommission = commissionAmount - Discount;
+
+            if (typeof(commissionAmount) === 'undefinde' || !commissionAmount) {
+                alert('يرجى ادخال مبلغ العمولة')
+            } else {
+                let finalValueVat = finalCommission * rate_vat /100;
+                let totla = finalCommission + finalValueVat;
+                document.getElementById('value_vat').value = finalValueVat;
+                document.getElementById('total').value = totla;
+            }
+        }
+    </script>
+
 @endsection

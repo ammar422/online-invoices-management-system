@@ -27,9 +27,9 @@
 
 
   <!--Internal  Datepicker js -->
-  
+
   <!-- Internal Select2 js-->
- 
+
   <!--Internal Fileuploads js-->
   <script src="{{ URL::asset('assets/plugins/fileuploads/js/fileupload.js') }}"></script>
   <script src="{{ URL::asset('assets/plugins/fileuploads/js/file-upload.js') }}"></script>
@@ -47,3 +47,30 @@
   <!-- Internal TelephoneInput js-->
   <script src="{{ URL::asset('assets/plugins/telephoneinput/telephoneinput.js') }}"></script>
   <script src="{{ URL::asset('assets/plugins/telephoneinput/inttelephoneinput.js') }}"></script>
+
+
+  {{-- ajax script for proudect and sections selector  --}}
+  <script>
+      // ajax script for proudect and sections selector 
+      $(document).ready(function() {
+          $('select[name="section"]').on('change', function() {
+              var sectionId = $(this).val();
+              if (sectionId) {
+                  $.ajax({
+                      url: "{{ URL::to('sections') }}/" + sectionId,
+                      type: "GET",
+                      dataType: "json",
+                      success: function(data) {
+                          $('select[name="product"]').empty();
+                          $.each(data, function(key, value) {
+                              $('select[name="product"]').append('<option value="' +
+                                  value + '">' + value + '</option>');
+                          });
+                      },
+                  });
+              } else {
+                  console.log('Ajax load did not work');
+              }
+          })
+      });
+  </script>
