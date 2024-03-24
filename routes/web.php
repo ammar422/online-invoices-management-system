@@ -19,9 +19,9 @@ Route::get('/', function () {
     return view('auth.login');
 })->middleware('guest');
 
-// route::get('tst',function(){
-//     return getSectionName();
-//     });
+route::get('tst',function(){
+    return public_path();
+    });
 
 
 Auth::routes();

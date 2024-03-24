@@ -13,6 +13,9 @@ return new class extends Migration
     {
         Schema::create('invoices_attachmetnts', function (Blueprint $table) {
             $table->id();
+            $table->string('file_name', 50);
+            $table->string('invoice_number', 50);
+            $table->string('user');
             $table->unsignedBigInteger('invoice_id');
             $table->foreign('invoice_id')->references('id')->on('invoices')->onDelete('cascade');
             $table->timestamps();

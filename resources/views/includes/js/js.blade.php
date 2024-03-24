@@ -53,7 +53,7 @@
   <script>
       // ajax script for proudect and sections selector 
       $(document).ready(function() {
-          $('select[name="section"]').on('change', function() {
+          $('select[name="section_id"]').on('change', function() {
               var sectionId = $(this).val();
               if (sectionId) {
                   $.ajax({
@@ -61,10 +61,10 @@
                       type: "GET",
                       dataType: "json",
                       success: function(data) {
-                          $('select[name="product"]').empty();
+                          $('select[name="product_id"]').empty();
                           $.each(data, function(key, value) {
-                              $('select[name="product"]').append('<option value="' +
-                                  value + '">' + value + '</option>');
+                              $('select[name="product_id"]').append('<option value="' +
+                                  key + '">' + value + '</option>');
                           });
                       },
                   });
@@ -73,4 +73,25 @@
               }
           })
       });
+  </script>
+
+  {{-- script of calculating the total of invoice --}}
+  <script>
+      function calcTotla() {
+          let commissionAmount = parseFloat(document.getElementById('commission_amount').value);
+          let Discount = parseFloat(document.getElementById('discount').value);
+          let rate_vat = parseFloat(document.getElementById('rate_vat').value);
+          let value_vat = parseFloat(document.getElementById('value_vat').value);
+
+          let finalCommission = commissionAmount - Discount;
+
+          if (typeof(commissionAmount) === 'undefinde' || !commissionAmount) {
+              alert('يرجى ادخال مبلغ العمولة')
+          } else {
+              let finalValueVat = finalCommission * rate_vat / 100;
+              let totla = finalCommission + finalValueVat;
+              document.getElementById('value_vat').value = finalValueVat;
+              document.getElementById('total').value = totla;
+          }
+      }
   </script>

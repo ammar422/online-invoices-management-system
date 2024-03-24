@@ -14,7 +14,7 @@ class Section extends Model
 
     public $email_address = "ammarSection@email.com";
     protected $fillable = [
-        'di',
+        'id',
         'name',
         'description',
         'created_by',

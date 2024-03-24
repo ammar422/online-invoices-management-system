@@ -23,6 +23,8 @@
         </div>
     </div>
     <!-- breadcrumb -->
+    @include('includes.alerts.error')
+    @include('includes.alerts.success')
 @endsection
 @section('content')
     <!-- row -->
@@ -69,10 +71,11 @@
                                             <th class="border-bottom-0">تاريخ الاستحقاق</th>
                                             <th class="border-bottom-0">المنتج</th>
                                             <th class="border-bottom-0">القسم</th>
+                                            <th class="border-bottom-0">المبلغ الكلى</th>
                                             <th class="border-bottom-0">الخصم</th>
                                             <th class="border-bottom-0">نسبة الضريبة</th>
                                             <th class="border-bottom-0">قيمة الضريبة</th>
-                                            <th class="border-bottom-0">الاجمالى</th>
+                                            <th class="border-bottom-0">العمولة</th>
                                             <th class="border-bottom-0">الحالة</th>
                                             <th class="border-bottom-0">ملاحظات</th>
                                             <th class="border-bottom-0">المستخدم</th>
@@ -86,12 +89,13 @@
                                                 <td>{{ $invoice->invoice_number }}</td>
                                                 <td>{{ $invoice->invoice_date }}</td>
                                                 <td>{{ $invoice->due_date }}</td>
-                                                <td>{{ $invoice->product }}</td>
-                                                <td>{{ $invoice->section }}</td>
+                                                <td>{{ $invoice->product->product_name }}</td>
+                                                <td>{{ $invoice->section->name }}</td>
+                                                <td>{{ $invoice->collection_amount }}</td>
                                                 <td>{{ $invoice->discount }}</td>
                                                 <td>{{ $invoice->rate_vat }}</td>
                                                 <td>{{ $invoice->value_vat }}</td>
-                                                <td>{{ $invoice->tottal }}</td>
+                                                <td>{{ $invoice->total }}</td>
                                                 <td>{{ $invoice->status }}</td>
                                                 <td>{{ $invoice->note }}</td>
                                                 <td>{{ $invoice->user }}</td>

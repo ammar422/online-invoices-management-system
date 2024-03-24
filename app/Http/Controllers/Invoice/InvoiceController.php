@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Invoice;
 
+use App\Events\InvoiceCreated;
 use App\Models\Invoice;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\invoice\StoreInvoiceRequest;
@@ -19,7 +20,7 @@ class InvoiceController extends Controller
     }
     public function index()
     {
-        $invoices = Invoice::all();
+        $invoices = Invoice::with(['product', 'section'])->get();
         return view('invoices.invoices', compact('invoices'));
     }
 
@@ -36,7 +37,14 @@ class InvoiceController extends Controller
      */
     public function store(StoreInvoiceRequest $request)
     {
-        return ($request);
+        
+        $invoice = Invoice::create($request->validated());
+        if ($invoice) {
+            session()->flash('success', 'تم اضافة الفاتورة بنجاح (' . $request->invoice_number . ')');
+            return to_route('invoices.index');
+        }
+        session()->flash('error', 'حدث خطاء ما برجاء المحاولة لاحقاََ');
+        return to_route('invoices.index');
     }
 
     /**

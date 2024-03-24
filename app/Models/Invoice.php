@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Invoice extends Model
@@ -13,20 +14,28 @@ class Invoice extends Model
         'invoice_number',
         'invoice_date',
         'due_date',
-        'product',
-        'section',
+        'product_id',
+        'section_id',
+        'collection_amount',
+        'commission_amount',
         'discount',
         'rate_vat',
         'value_vat',
-        'tottal',
+        'total',
         'status',
         'value_status',
         'note',
         'user',
+        'image',
     ];
 
-    public function product(): HasOne
+    public function product(): BelongsTo
     {
-        return $this->hasOne(Product::class, 'invoices_id', 'id');
+        return $this->belongsTo(Product::class, 'product_id', 'id');
     }
+    public function section(): BelongsTo
+    {
+        return $this->belongsTo(Section::class, 'section_id', 'id');
+    }
+    
 }

@@ -22,19 +22,20 @@ class StoreInvoiceRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'invoice_number' => 'required|numeric',
+            'user' => 'required','exists:users,name',
+            'invoice_number' => 'required','string','max:100',
             'invoice_date' => 'required|date',
-            'due_date' => 'required','date',
-            'section' => 'required','exists:sections,name',
-            'product' => 'required','exists:products,product_name',
-            'collection-amount' => 'required','numeric',
-            'commission-amount' => 'required','numeric',
-            'discount' => 'required','numeric',
+            'due_date' => 'required', 'date',
+            'product_id' => 'required', 'exists:products,id',
+            'section_id' => 'required', 'exists:sections,id',
+            'collection_amount' => 'required', 'numeric',
+            'commission_amount' => 'required', 'numeric',
+            'discount' => 'required', 'numeric',
             'rate_vat' => 'required',
             'value_vat' => 'required',
             'total' => 'required',
-            'note' => 'nullable','max:255',
-            'pic' => 'required','image','mimes:png,jpg','size:1024'
+            'note' => 'nullable', 'max:255',
+            'image' => 'required','image', 'mimes:png,jpg', 'size:1024'
         ];
     }
 }

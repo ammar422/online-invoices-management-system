@@ -2,11 +2,15 @@
 
 namespace App\Providers;
 
+use App\Events\InvoiceCreated;
 use App\Events\SectionCreated;
+use App\Listeners\CreateInvoiceDetails;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Auth\Events\Registered;
 use App\Listeners\SendEmailSectionCreated;
+use App\Models\Invoice;
 use App\Models\Section;
+use App\Observers\InvoiceObserver;
 use App\Observers\SectionObserver;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
@@ -22,7 +26,7 @@ class EventServiceProvider extends ServiceProvider
         Registered::class => [
             SendEmailVerificationNotification::class,
         ],
-        SectionCreated::class=>[
+        SectionCreated::class => [
             SendEmailSectionCreated::class,
         ]
     ];
@@ -33,6 +37,7 @@ class EventServiceProvider extends ServiceProvider
     public function boot(): void
     {
         Section::observe(SectionObserver::class);
+        Invoice::observe(InvoiceObserver::class);
     }
 
     /**

@@ -24,6 +24,7 @@
                 <div class="card-body">
                     <form action="{{ route('invoices.store') }}" method="post" enctype="multipart/form-data">
                         @csrf
+                        <input type="hidden" name="user" value="{{ Auth::user()->name }}">
                         <div class="row">
                             <div class="col">
                                 <label for="inputName" class="control-label">رقم الفاتورة</label>
@@ -67,13 +68,13 @@
                         <div class="row">
                             <div class="col">
                                 <label for="inputName" class="control-label">القسم</label>
-                                <select name="section" class="form-control @error('section') is-invalid @enderror ">
+                                <select name="section_id" class="form-control @error('section_id') is-invalid @enderror ">
                                     <option value="" selected disabled>حدد القسم</option>
                                     @foreach (getSectionName() as $section)
                                         <option value="{{ $section->id }}">{{ $section->name }}</option>
                                     @endforeach
                                 </select>
-                                @error('section')
+                                @error('section_id')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>
                                             {{ $message }}
@@ -83,11 +84,11 @@
                             </div>
                             <div class="col">
                                 <label for="inputName" class="control-label">المنتج</label>
-                                <select id="product" name="product"
-                                    class="form-control @error('product') is-invalid @enderror ">
+                                <select id="product_id" name="product_id"
+                                    class="form-control @error('product_id') is-invalid @enderror ">
 
                                 </select>
-                                @error('product')
+                                @error('product_id')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>
                                             {{ $message }}
@@ -97,9 +98,9 @@
                             </div>
                             <div class="col">
                                 <label for="inputName" class="control-label">مبلغ التحصيل</label>
-                                <input type="text" class="form-control @error('collection-amount') is-invalid @enderror"
-                                    id="inputName" name="collection-amount">
-                                @error('collection-amount')
+                                <input type="number" class="form-control @error('collection_amount') is-invalid @enderror"
+                                    id="collection_amount" name="collection_amount">
+                                @error('collection_amount')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>
                                             {{ $message }}
@@ -112,10 +113,10 @@
                         <div class="row">
                             <div class="col">
                                 <label for="inputName" class="control-label">مبلغ العمولة</label>
-                                <input type="text"
-                                    class="form-control form-control-lg @error('commission-amount') is-invalid @enderror"
-                                    id="commission-amount" name="commission-amount" title="يرجي ادخال مبلغ العمولة ">
-                                @error('commission-amount')
+                                <input type="number"
+                                    class="form-control form-control-lg @error('commission_amount') is-invalid @enderror"
+                                    id="commission_amount" name="commission_amount" title="يرجي ادخال مبلغ العمولة ">
+                                @error('commission_amount')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>
                                             {{ $message }}
@@ -125,9 +126,9 @@
                             </div>
                             <div class="col">
                                 <label for="inputName" class="control-label">الخصم</label>
-                                <input type="text"
+                                <input type="number"
                                     class="form-control form-control-lg @error('discount') is-invalid @enderror"
-                                    id="Discount" name="discount" value="0" title="يرجي ادخال مبلغ الخصم ">
+                                    id="discount" name="discount" value="0" title="يرجي ادخال مبلغ الخصم ">
                                 @error('discount')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>
@@ -138,8 +139,8 @@
                             </div>
                             <div class="col">
                                 <label for="inputName" class="control-label">نسبة ضريبة القيمة المضافة</label>
-                                <select name="rate_vat" id="rate_vat"
-                                    class="form-control @error('rate_vat') is-invalid @enderror" onchange="calcTotla()">
+                                <select name="rate_vat" id="rate_vat" 
+                                    class="form-control @error('rate_vat') is-invalid @enderror" onchange="calcTotla()" >
                                     <option value="" selected disabled>حدد نسبة الضريبة</option>
                                     <option value="5">5%</option>
                                     <option value="10">10%</option>
@@ -202,9 +203,9 @@
 
                         <h5 class="card-title">المرفقات</h5>
                         <div class="col">
-                            <input type="file" name="pic"
-                                class="form-control  @error('pic') is-invalid @enderror" data-height="70" />
-                            @error('pic')
+                            <input type="file" name="image"
+                                class="form-control  @error('image') is-invalid @enderror" data-height="70" />
+                            @error('image')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>
                                         {{ $message }}
@@ -229,27 +230,4 @@
 @endsection
 @section('js')
     @include('includes.js.js')
-
-
-    {{-- script of calculating the total of invoice --}}
-    <script>
-        function calcTotla() {
-            let commissionAmount = parseFloat(document.getElementById('commission-amount').value);
-            let Discount = parseFloat(document.getElementById('Discount').value);
-            let rate_vat = parseFloat(document.getElementById('rate_vat').value);
-            let value_vat = parseFloat(document.getElementById('value_vat').value);
-
-            let finalCommission = commissionAmount - Discount;
-
-            if (typeof(commissionAmount) === 'undefinde' || !commissionAmount) {
-                alert('يرجى ادخال مبلغ العمولة')
-            } else {
-                let finalValueVat = finalCommission * rate_vat /100;
-                let totla = finalCommission + finalValueVat;
-                document.getElementById('value_vat').value = finalValueVat;
-                document.getElementById('total').value = totla;
-            }
-        }
-    </script>
-
 @endsection
