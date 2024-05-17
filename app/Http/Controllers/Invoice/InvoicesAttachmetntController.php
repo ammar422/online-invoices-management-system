@@ -16,7 +16,7 @@ class InvoicesAttachmetntController extends Controller
      */
     public function index()
     {
-        //
+        // 
     }
 
     /**
@@ -59,9 +59,17 @@ class InvoicesAttachmetntController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(InvoicesAttachmetnt $invoicesAttachmetnt)
+    public function deleteFile($id, $file)
     {
-        //
+
+        $attachment = InvoicesAttachmetnt::find($id);
+        if ($attachment) {
+            unlink(public_path('attachmetnts/' . $file . '/' . $attachment->file_name));
+            $attachment->delete();
+            return redirect()->back()->with('success', 'تم حذف المرفق بنجاح');
+        }
+        session()->flash('erreo', 'تم حذف هذا المرفق من قبل');
+        return to_route('invoices_details.show', $id);
     }
 
 

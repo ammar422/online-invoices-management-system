@@ -19,12 +19,10 @@
         </div>
     </div>
     <!-- breadcrumb -->
+    @include('includes.alerts.error')
+    @include('includes.alerts.success')
 @endsection
 @section('content')
-
-
-
-
     <div class="col-xl-12">
         <!-- div -->
         <div class="card" id="tabs-style4">
@@ -216,8 +214,8 @@
                                                                     <i class="fas fa-download"></i>&nbsp;&nbsp;
                                                                     تحميل
                                                                 </a>
-                                                                <a class="btn btn-outline-danger btn-sm" role="button"
-                                                                    href="">
+                                                                <a class="btn btn-outline-danger btn-sm"
+                                                                    data-toggle="modal" href="#delete_file">
                                                                     <i class="fas fa-trash"></i>
                                                                     حذف
                                                                 </a>
@@ -244,6 +242,33 @@
         </div>
     </div>
     </div>
+    <!-- Modal effects -->
+    <div class="modal" id="delete_file">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content modal-content-demo">
+                <div class="modal-header">
+                    <h6 class="modal-title">حذف المرفق</h6><button aria-label="Close" class="close"
+                        data-dismiss="modal" type="button"><span aria-hidden="true">&times;</span></button>
+                </div>
+                <form
+                    action="{{ route('invoice_attachments.delete_file', [$invoiceData->id, $invoiceData->invoice_number]) }}"
+                    method="POST">
+                    @csrf
+                    <div class="modal-body">
+                        <h6>هل انت متأكد من حذف هذا المرفق ؟<br> <br>
+                            للمتابعة اضغط موافق
+                        </h6>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn ripple btn-danger" type="submit">موافق</button>
+                        <button class="btn ripple btn-success" data-dismiss="modal" type="button">إلغاء</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- End Modal effects-->
 
 @endsection
 @section('js')

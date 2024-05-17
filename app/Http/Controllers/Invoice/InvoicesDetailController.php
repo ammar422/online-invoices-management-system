@@ -38,9 +38,11 @@ class InvoicesDetailController extends Controller
      */
     public function show(InvoicesDetail $invoicesDetail)
     {
-        // dd($invoicesDetail);
         $invoiceData = $invoicesDetail->invoice;
-        return view('invoices.invoices_details', compact('invoiceData'));
+        if ($invoiceData) {
+            return view('invoices.invoices_details', compact('invoiceData'));
+        }
+        return redirect()->back()->with('error', 'هذه الفاتورة غير موجودة');
     }
 
     /**

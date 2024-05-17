@@ -34,5 +34,6 @@ route::middleware('auth')->group(function () {
     route::resource('invoice_attachments','Invoice\InvoicesAttachmetntController');
     route::get('open_file/{id}/{file}','Invoice\InvoicesAttachmetntController@showFile')->name('invoice_attachments.show_file');
     route::get('download_file/{id}/{file}','Invoice\InvoicesAttachmetntController@downloadFile')->name('invoice_attachments.download_file');
+    route::post('delete_file/{id}/{file}','Invoice\InvoicesAttachmetntController@deleteFile')->name('invoice_attachments.delete_file');
     Route::get('/{page}', 'AdminController@index')->middleware('auth');
 });
