@@ -10,8 +10,8 @@ class InvoicesAttachmetnt extends Model
     use HasFactory;
     protected $fillable = [
         'invoice_id',
-        'invoice_number',
-        'file_name',
         'user',
+        'invoice_number',
+        'file_name'
     ];
 }

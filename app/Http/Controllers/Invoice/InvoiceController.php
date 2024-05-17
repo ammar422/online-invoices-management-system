@@ -37,8 +37,7 @@ class InvoiceController extends Controller
      */
     public function store(StoreInvoiceRequest $request)
     {
-        
-        $invoice = Invoice::create($request->validated());
+         $invoice = Invoice::create($request->validated());
         if ($invoice) {
             session()->flash('success', 'تم اضافة الفاتورة بنجاح (' . $request->invoice_number . ')');
             return to_route('invoices.index');

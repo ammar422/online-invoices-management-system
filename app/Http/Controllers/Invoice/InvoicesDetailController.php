@@ -14,7 +14,7 @@ class InvoicesDetailController extends Controller
      */
     public function index()
     {
-        //
+        return InvoicesDetail::all();
     }
 
     /**
@@ -38,7 +38,9 @@ class InvoicesDetailController extends Controller
      */
     public function show(InvoicesDetail $invoicesDetail)
     {
-        //
+        // dd($invoicesDetail);
+        $invoiceData = $invoicesDetail->invoice;
+        return view('invoices.invoices_details', compact('invoiceData'));
     }
 
     /**

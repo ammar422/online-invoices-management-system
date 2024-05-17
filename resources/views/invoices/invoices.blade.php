@@ -86,7 +86,9 @@
                                         @foreach ($invoices as $invoice)
                                             <tr>
                                                 <td>{{ $invoice->id }}</td>
-                                                <td>{{ $invoice->invoice_number }}</td>
+                                                <td> <a href="{{ route('invoices_details.show', $invoice->id) }}">
+                                                    {{ $invoice->invoice_number }}
+                                                </a></td>
                                                 <td>{{ $invoice->invoice_date }}</td>
                                                 <td>{{ $invoice->due_date }}</td>
                                                 <td>{{ $invoice->product->product_name }}</td>
@@ -96,7 +98,24 @@
                                                 <td>{{ $invoice->rate_vat }}</td>
                                                 <td>{{ $invoice->value_vat }}</td>
                                                 <td>{{ $invoice->total }}</td>
-                                                <td>{{ $invoice->status }}</td>
+                                                <td>
+                                                    <strong>
+
+                                                        @if ($invoice->status == 'paid')
+                                                            <span class="text-success">
+                                                                {{ $invoice->status }}
+                                                            </span>
+                                                        @elseif ($invoice->status == 'unpaid')
+                                                            <span class="text-danger">
+                                                                {{ $invoice->status }}
+                                                            </span>
+                                                        @else
+                                                            <span class="text-warning">
+                                                                {{ $invoice->status }}
+                                                            </span>
+                                                        @endif
+                                                    </strong>
+                                                </td>
                                                 <td>{{ $invoice->note }}</td>
                                                 <td>{{ $invoice->user }}</td>
                                             </tr>

@@ -35,7 +35,7 @@ class StoreInvoiceRequest extends FormRequest
             'value_vat' => 'required',
             'total' => 'required',
             'note' => 'nullable', 'max:255',
-            'image' => 'required','image', 'mimes:png,jpg', 'size:1024'
+            'file' => 'required|mimes:pdf|max:1024'
         ];
     }
 }

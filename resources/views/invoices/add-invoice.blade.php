@@ -203,9 +203,9 @@
 
                         <h5 class="card-title">المرفقات</h5>
                         <div class="col">
-                            <input type="file" name="image"
-                                class="form-control  @error('image') is-invalid @enderror" data-height="70" />
-                            @error('image')
+                            <input type="file" name="file"
+                                class="form-control  @error('file') is-invalid @enderror" data-height="70" />
+                            @error('file')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>
                                         {{ $message }}

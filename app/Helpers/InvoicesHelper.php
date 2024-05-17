@@ -1,10 +1,9 @@
 <?php
 
 
-function uploadImage($folder, $photo)
+function uploadImage($photo, $folder)
 {
-    $photo->store('/',$folder);
-    $filename=$photo->hashName();
-    $path='imags/'. $folder . '/' . $filename ;
-    return $path;
+    $image = $photo->getClientOriginalName();
+    $photo->move(public_path('attachmetnts/' . $folder), $image);
+    return $image;
 }

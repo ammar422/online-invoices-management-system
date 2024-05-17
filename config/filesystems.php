@@ -46,7 +46,7 @@ return [
 
         'attachmetnts' => [
             'driver' => 'local',
-            'root' => public_path('attachmetnts/invoices'),
+            'root' => public_path('attachmetnts'),
             'url' => env('APP_URL').'/public',
             'visibility' => 'public',
             'throw' => false,

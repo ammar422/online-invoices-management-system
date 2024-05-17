@@ -6,6 +6,8 @@ use App\Models\InvoicesAttachmetnt;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\invoice\StoreInvoicesAttachmetntRequest;
 use App\Http\Requests\invoice\UpdateInvoicesAttachmetntRequest;
+use Illuminate\Support\Facades\Storage;
+
 
 class InvoicesAttachmetntController extends Controller
 {
@@ -36,10 +38,7 @@ class InvoicesAttachmetntController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(InvoicesAttachmetnt $invoicesAttachmetnt)
-    {
-        //
-    }
+    // public function show(InvoicesAttachmetnt $invoicesAttachmetnt)
 
     /**
      * Show the form for editing the specified resource.
@@ -63,5 +62,27 @@ class InvoicesAttachmetntController extends Controller
     public function destroy(InvoicesAttachmetnt $invoicesAttachmetnt)
     {
         //
+    }
+
+
+
+    public function showFile($id, $folder)
+    {
+        $attachment = InvoicesAttachmetnt::find($id);
+        if ($attachment) {
+            $file = Storage::path($folder . '\\' . $attachment->file_name);
+            return response()->file($file);
+        }
+        return redirect()->back()->with('error', 'حدث خطاء ما برجاء المحاولة لاحقاََ');
+    }
+
+    public function downloadFile($id, $folder)
+    {
+        $attachment = InvoicesAttachmetnt::find($id);
+        if ($attachment) {
+            $file = Storage::path($folder . '\\' . $attachment->file_name);
+            return response()->download($file);
+        }
+        return redirect()->back()->with('error', 'حدث خطاء ما برجاء المحاولة لاحقاََ');
     }
 }

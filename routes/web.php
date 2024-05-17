@@ -1,6 +1,7 @@
 <?php
 
-use App\Models\Section;
+use App\Models\Invoice;
+use App\Models\InvoicesDetail;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -19,9 +20,7 @@ Route::get('/', function () {
     return view('auth.login');
 })->middleware('guest');
 
-route::get('tst',function(){
-    return public_path();
-    });
+route::get('tst/{id}', 'Invoice\InvoicesAttachmetntController@show');
 
 
 Auth::routes();
@@ -30,6 +29,10 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 route::middleware('auth')->group(function () {
     Route::resource('invoices', 'Invoice\InvoiceController');
     Route::resource('sections', 'Section\SectionController');
-    route::resource('products','Product\ProductController');
+    route::resource('products', 'Product\ProductController');
+    route::resource('invoices_details', 'Invoice\InvoicesDetailController');
+    route::resource('invoice_attachments','Invoice\InvoicesAttachmetntController');
+    route::get('open_file/{id}/{file}','Invoice\InvoicesAttachmetntController@showFile')->name('invoice_attachments.show_file');
+    route::get('download_file/{id}/{file}','Invoice\InvoicesAttachmetntController@downloadFile')->name('invoice_attachments.download_file');
     Route::get('/{page}', 'AdminController@index')->middleware('auth');
 });

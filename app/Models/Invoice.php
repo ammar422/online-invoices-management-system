@@ -2,9 +2,11 @@
 
 namespace App\Models;
 
+use Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Invoice extends Model
@@ -26,7 +28,7 @@ class Invoice extends Model
         'value_status',
         'note',
         'user',
-        'image',
+        'file',
     ];
 
     public function product(): BelongsTo
@@ -37,5 +39,13 @@ class Invoice extends Model
     {
         return $this->belongsTo(Section::class, 'section_id', 'id');
     }
-    
+
+    public function details(): HasOne
+    {
+        return $this->hasOne(InvoicesDetail::class, 'invoice_id', 'id');
+    }
+    public function attatchments(): HasMany
+    {
+        return $this->hasMany(InvoicesAttachmetnt::class, 'invoice_id', 'id');
+    }
 }

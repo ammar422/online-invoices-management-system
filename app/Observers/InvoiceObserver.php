@@ -24,8 +24,9 @@ class InvoiceObserver
         ];
         InvoicesDetail::create($details);
 
-        if ($invoice->image) {
-            $image = uploadImage('attachmetnts', $invoice->image);
+        if ($invoice->file) {
+            
+            $image = uploadImage($invoice->file,$invoice->invoice_number);
             $attachment = [
                 'invoice_id' => $invoice->id,
                 'invoice_number' => $invoice->invoice_number,
